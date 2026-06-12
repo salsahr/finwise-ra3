@@ -17,7 +17,8 @@ cada classe.
 ## Regras importantes do projeto
 
 - Interface gráfica construída **100% por código** — sem SceneBuilder e sem FXML.
-- Persistência de dados em **arquivo CSV** (sem banco de dados).
+- Persistência de dados em arquivo, via **serialização de objetos**
+  (`ObjectOutputStream` / `ObjectInputStream`), sem banco de dados.
 - **Tratamento de exceções** com `try-catch` nas operações de risco (leitura/escrita
   de arquivo, conversão de números).
 
@@ -27,19 +28,18 @@ O projeto é dividido em três pacotes, separando domínio, persistência e inte
 
 | Pacote         | Responsabilidade                                                        |
 |----------------|-------------------------------------------------------------------------|
-| `modelo`       | Classes de domínio (apenas dados: atributos, construtor, getters/setters). |
-| `persistencia` | Classes DAO que leem e gravam cada entidade em seu arquivo CSV.          |
+| `modelo`       | Classes de domínio (apenas dados: atributos, construtor, getters/setters). As classes implementam `Serializable`. |
+| `persistencia` | Classes DAO que gravam e leem cada entidade em arquivo, por serialização. |
 | `ui`           | Telas JavaFX de CRUD (formulário + tabela + botões na mesma janela).     |
 
 ## Padrão de CRUD
 
-- Os dados ficam em uma lista em memória; o arquivo CSV é o espelho dela no disco.
-- A cada alteração (inserir/editar/excluir), a lista é modificada e o arquivo é
-  reescrito por completo.
+- Os dados ficam em uma lista em memória; o arquivo é o espelho dela no disco.
+- A cada alteração (inserir/editar/excluir), a lista é modificada e gravada por
+  completo no arquivo (a lista inteira é serializada de uma vez).
 - As telas nunca acessam o arquivo diretamente — solicitam isso ao DAO
   correspondente (separação entre domínio e interface).
 
- 
 
 ## Como executar
 
@@ -53,3 +53,4 @@ O projeto é dividido em três pacotes, separando domínio, persistência e inte
 - Artur Kuzma Marques
 - Giovane Renato Trevisan
 - Guilherme Hoshino Rouver
+- João Vitor Dadas de Oliveira
