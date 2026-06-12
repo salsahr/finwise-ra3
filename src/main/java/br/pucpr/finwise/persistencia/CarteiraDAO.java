@@ -2,64 +2,46 @@ package br.pucpr.finwise.persistencia;
 
 import br.pucpr.finwise.modelo.Carteira;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CarteiraDAO {
 
-    private static final String ARQUIVO = "carteiras.csv";
+    private static final String CAMINHO_ARQUIVO = "carteiras.dat";
 
-    private String paraLinha(Carteira carteira) {
-        String linha = carteira.getId() + ";"
-                + carteira.getNome() + ";"
-                + carteira.getInvestidorId() + ";"
-                + carteira.getValorInvestido() + ";"
-                + carteira.getRentabilidade();
-        return linha;
-    }
-
-    private Carteira paraCarteira(String linha) {
-        String[] campos = linha.split(";");
-
-        int id = Integer.parseInt(campos[0]);
-        String nome = campos[1];
-        int investidorId = Integer.parseInt(campos[2]);
-        double valorInvestido = Double.parseDouble(campos[3]);
-        double rentabilidade = Double.parseDouble(campos[4]);
-
-        Carteira carteira = new Carteira(id, nome, investidorId, valorInvestido, rentabilidade);
-        return carteira;
-    }
-
-    public void salvarTodos(List<Carteira> carteiras) {
-        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(ARQUIVO))) {
-            for (Carteira carteira : carteiras) {
-                String linha = paraLinha(carteira);
-                escritor.write(linha);
-                escritor.newLine();
+    // Grava a lista inteira de carteiras no arquivo
+    public static void salvarLista(ArrayList<Carteira> carteiras) {
+        try {
+            File arquivo = new File(CAMINHO_ARQUIVO);
+            if (!arquivo.exists()) {
+                arquivo.createNewFile();
             }
+            ObjectOutputStream saida = new ObjectOutputStream(new FileOutputStream(arquivo));
+            saida.writeObject(carteiras);
+            saida.close();
         } catch (IOException e) {
-            System.out.println("Erro ao salvar o arquivo: " + e.getMessage());
+            System.err.println("Erro ao salvar a lista de carteiras: " + e.getMessage());
         }
     }
 
-    public List<Carteira> listarTodos() {
-        List<Carteira> carteiras = new ArrayList<>();
-        try (BufferedReader leitor = new BufferedReader(new FileReader(ARQUIVO))) {
-            String linha = leitor.readLine();
-            while (linha != null) {
-                Carteira carteira = paraCarteira(linha);
-                carteiras.add(carteira);
-                linha = leitor.readLine();
+    // Lê a lista inteira de carteiras do arquivo
+    public static ArrayList<Carteira> lerLista() {
+        ArrayList<Carteira> lista = new ArrayList<>();
+        try {
+            File arquivo = new File(CAMINHO_ARQUIVO);
+            if (arquivo.exists()) {
+                ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(CAMINHO_ARQUIVO));
+                lista = (ArrayList<Carteira>) entrada.readObject();
+                entrada.close();
             }
-        } catch (IOException e) {
-            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Erro ao ler a lista de carteiras: " + e.getMessage());
         }
-        return carteiras;
+        return lista;
     }
 }

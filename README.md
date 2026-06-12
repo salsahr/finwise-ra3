@@ -39,7 +39,7 @@ O projeto é dividido em três pacotes, separando domínio, persistência e inte
 - As telas nunca acessam o arquivo diretamente — solicitam isso ao DAO
   correspondente (separação entre domínio e interface).
 
-
+ 
 
 ## Como executar
 

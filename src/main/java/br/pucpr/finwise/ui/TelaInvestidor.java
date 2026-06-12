@@ -25,10 +25,11 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.ArrayList;
 
 public class TelaInvestidor {
 
-    private final InvestidorDAO dao = new InvestidorDAO();
+
     private final ObservableList<Investidor> investidores = FXCollections.observableArrayList();
 
     private final TextField campoNome = new TextField();
@@ -150,7 +151,7 @@ public class TelaInvestidor {
     }
 
     private void carregarDados() {
-        List<Investidor> lista = dao.listarTodos();
+        ArrayList<Investidor> lista = InvestidorDAO.lerLista();
         investidores.setAll(lista);
     }
 
@@ -178,7 +179,7 @@ public class TelaInvestidor {
 
             Investidor novo = new Investidor(id, nome, email, perfil, saldo, dataTexto);
             investidores.add(novo);
-            dao.salvarTodos(investidores);
+            InvestidorDAO.salvarLista(new ArrayList<>(investidores));
 
             limparCampos();
             mostrarInfo("Investidor salvo com sucesso!");
@@ -204,7 +205,7 @@ public class TelaInvestidor {
             LocalDate data = campoData.getValue();
             selecionado.setDataCadastro(data.format(formatoBR));
 
-            dao.salvarTodos(investidores);
+            InvestidorDAO.salvarLista(new ArrayList<>(investidores));
             tabela.refresh();
 
             limparCampos();
@@ -223,7 +224,7 @@ public class TelaInvestidor {
             return;
         }
         investidores.remove(selecionado);
-        dao.salvarTodos(investidores);
+        InvestidorDAO.salvarLista(new ArrayList<>(investidores));
         limparCampos();
         mostrarInfo("Investidor excluído com sucesso!");
     }

@@ -23,12 +23,12 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TelaCarteira {
 
-    private final CarteiraDAO dao = new CarteiraDAO();
-    private final InvestidorDAO investidorDao = new InvestidorDAO();
+
 
     private final ObservableList<Carteira> carteiras = FXCollections.observableArrayList();
 
@@ -154,12 +154,12 @@ public class TelaCarteira {
     }
 
     private void carregarInvestidores() {
-        List<Investidor> lista = investidorDao.listarTodos();
+        ArrayList<Investidor> lista = InvestidorDAO.lerLista();
         campoInvestidor.getItems().setAll(lista);
     }
 
     private void carregarDados() {
-        List<Carteira> lista = dao.listarTodos();
+        ArrayList<Carteira> lista = CarteiraDAO.lerLista();
         carteiras.setAll(lista);
     }
 
@@ -185,7 +185,7 @@ public class TelaCarteira {
 
             Carteira nova = new Carteira(id, nome, investidorId, valor, rentabilidade);
             carteiras.add(nova);
-            dao.salvarTodos(carteiras);
+            CarteiraDAO.salvarLista(new ArrayList<>(carteiras));
 
             limparCampos();
             mostrarInfo("Carteira salva com sucesso!");
@@ -209,7 +209,7 @@ public class TelaCarteira {
             selecionada.setValorInvestido(Double.parseDouble(campoValor.getText()));
             selecionada.setRentabilidade(Double.parseDouble(campoRentabilidade.getText()));
 
-            dao.salvarTodos(carteiras);
+            CarteiraDAO.salvarLista(new ArrayList<>(carteiras));
             tabela.refresh();
 
             limparCampos();
@@ -228,7 +228,7 @@ public class TelaCarteira {
             return;
         }
         carteiras.remove(selecionada);
-        dao.salvarTodos(carteiras);
+        CarteiraDAO.salvarLista(new ArrayList<>(carteiras));
         limparCampos();
         mostrarInfo("Carteira excluída com sucesso!");
     }

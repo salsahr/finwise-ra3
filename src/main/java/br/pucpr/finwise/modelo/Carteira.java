@@ -1,6 +1,10 @@
 package br.pucpr.finwise.modelo;
 
-public class Carteira {
+import java.io.Serializable;
+
+public class Carteira implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int id;
     private String nome;
