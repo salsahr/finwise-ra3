@@ -53,4 +53,3 @@ O projeto é dividido em três pacotes, separando domínio, persistência e inte
 - Artur Kuzma Marques
 - Giovane Renato Trevisan
 - Guilherme Hoshino Rouver
-- João Vitor Dadas de Oliveira
