@@ -67,7 +67,7 @@ public class TelaMatricula {
         raiz.setCenter(centro);
         raiz.setBottom(barraBotoes);
 
-        Scene cena = new Scene(raiz, 800, 450);
+        Scene cena = new Scene(raiz, 600, 450);
         janela.setScene(cena);
 
         carregarCursos();
