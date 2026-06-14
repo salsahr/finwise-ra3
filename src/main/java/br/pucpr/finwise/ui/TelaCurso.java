@@ -36,13 +36,15 @@ public class TelaCurso {
         Button botaoSalvar = new Button("Salvar");
         Button botaoAtualizar = new Button("Atualizar");
         Button botaoExcluir = new Button("Excluir");
+        Button botaoVoltar = new Button("Voltar");
 
         botaoNovo.setOnAction(e -> limparCampos());
         botaoSalvar.setOnAction(e -> salvar());
         botaoAtualizar.setOnAction(e -> atualizar());
         botaoExcluir.setOnAction(e -> excluir());
+        botaoVoltar.setOnAction(e -> janela.close());
 
-        HBox barraBotoes = new HBox(10, botaoNovo, botaoSalvar, botaoAtualizar, botaoExcluir);
+        HBox barraBotoes = new HBox(10, botaoVoltar, botaoSalvar, botaoAtualizar, botaoExcluir);
         barraBotoes.setPadding(new Insets(10));
 
         HBox centro = new HBox(20, formulario, tabela);

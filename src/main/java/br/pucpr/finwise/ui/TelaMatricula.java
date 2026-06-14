@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +47,15 @@ public class TelaMatricula {
         Button botaoSalvar = new Button("Salvar");
         Button botaoAtualizar = new Button("Atualizar");
         Button botaoExcluir = new Button("Excluir");
+        Button botaoVoltar = new Button("Voltar");
 
         botaoNovo.setOnAction(e -> limparCampos());
         botaoSalvar.setOnAction(e -> salvar());
         botaoAtualizar.setOnAction(e -> atualizar());
         botaoExcluir.setOnAction(e -> excluir());
+        botaoVoltar.setOnAction(e -> janela.close());
 
-        HBox barraBotoes = new HBox(10, botaoNovo, botaoSalvar, botaoAtualizar, botaoExcluir);
+        HBox barraBotoes = new HBox(10, botaoVoltar, botaoNovo, botaoSalvar, botaoAtualizar, botaoExcluir);
         barraBotoes.setPadding(new Insets(10));
 
         HBox centro = new HBox(20, formulario, tabela);

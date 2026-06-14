@@ -52,15 +52,18 @@ public class TelaCarteira {
         Button botaoSalvar = new Button("Salvar");
         Button botaoAtualizar = new Button("Atualizar");
         Button botaoExcluir = new Button("Excluir");
+        Button botaoVoltar = new Button("Voltar");
 
         botaoNovo.setOnAction(e -> limparCampos());
         botaoSalvar.setOnAction(e -> salvar());
         botaoAtualizar.setOnAction(e -> atualizar());
         botaoExcluir.setOnAction(e -> excluir());
+        botaoVoltar.setOnAction(e -> janela.close());
 
         HBox barraBotoes = new HBox();
         barraBotoes.setSpacing(10);
         barraBotoes.setPadding(new Insets(10));
+        barraBotoes.getChildren().add(botaoVoltar);
         barraBotoes.getChildren().add(botaoNovo);
         barraBotoes.getChildren().add(botaoSalvar);
         barraBotoes.getChildren().add(botaoAtualizar);
